@@ -6,8 +6,11 @@ const fs = require('fs');
 // (Project Settings > Service Accounts > Generate new private key)
 // Place the JSON file in the backend root directory (e.g., serviceAccountKey.json)
 // and reference it in the .env file.
+
 const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH
-    ? path.join(__dirname, '..', process.env.FIREBASE_SERVICE_ACCOUNT_PATH)
+    ? path.isAbsolute(process.env.FIREBASE_SERVICE_ACCOUNT_PATH)
+        ? process.env.FIREBASE_SERVICE_ACCOUNT_PATH
+        : path.join(__dirname, '..', process.env.FIREBASE_SERVICE_ACCOUNT_PATH)
     : null;
 
 let serviceAccount = null;
